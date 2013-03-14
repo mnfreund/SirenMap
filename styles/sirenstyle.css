@@ -1,0 +1,78 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 1;
+}
+
+#map{
+    width:940px;
+    height:600px;
+}
+
+#info{
+    position:relative;
+    background-image: url("../assets/background.png");
+    margin-left: 72.4%;
+    margin-top: 1%;
+    width:250px;
+    z-index: 999;
+    border-radius:9px;
+    margin-bottom: 4px
+    -moz-border-radius:9px; /* Old Firefox */
+
+
+}
+
+#title{
+    position:relative;
+    font-size: 17px;
+    font-weight: bold;
+    font-family: 'arial';
+    padding-left: 5px;
+    padding-top:3px;
+}
+
+#stats{
+    font-size: 14px;
+    position:relative;
+    padding-left: 5px;
+    padding-bottom:5px;
+}
