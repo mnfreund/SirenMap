@@ -42,7 +42,27 @@ table {
     border-spacing: 1;
 }
 
+form{
+    width: 200px;
+}
+
+h3{
+    font-size: 30px;
+    font-weight: bold;
+    padding-left:2px;
+    padding-bottom: 5px
+}
+#searchDetails{
+    font-size: 14.2px;
+    font-style: italic;
+    padding-bottom:5px;
+    padding-left:2px;
+}
+
+
 #map{
+    position:absolute;
+    top:0%;
     width:940px;
     height:600px;
 }
@@ -50,7 +70,7 @@ table {
 #info{
     position:relative;
     background-image: url("../assets/background.png");
-    margin-left: 72.4%;
+    margin-left: 62%;
     margin-top: 1%;
     width:250px;
     z-index: 999;
@@ -60,6 +80,57 @@ table {
 
 
 }
+
+#formDiv{
+    position:relative;
+    background-image: url("../assets/background.png");
+    margin-left: 47%;
+    margin-top: 1%;
+    padding:10px;
+    padding-bottom:15px;
+    width:395px;
+    z-index: 9999999;
+    border-radius:9px;
+    margin-bottom: 4px
+    -moz-border-radius:9px; /* Old Firefox */
+
+
+}
+
+#explainer{
+    position:relative;
+    background-image: url("../assets/background.png");
+    margin-left: 47%;
+    margin-top: 1%;
+    padding:10px;
+    padding-bottom:15px;
+    width:395px;
+    z-index: 999;
+    border-radius:9px;
+    margin-bottom: 4px
+    -moz-border-radius:9px; /* Old Firefox */
+
+
+}
+
+
+#toggle{
+    font-style: italic;
+    font-size: 12px;
+    position:relative;
+    background-image: url("../assets/togglebackground.png");
+    margin-left: 70.5%;
+    margin-top: 0%;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 8px;
+    padding-bottom: 12px;
+    width:130px;
+    z-index: 999;
+    cursor: pointer;
+}
+
+
 
 #title{
     position:relative;
@@ -76,3 +147,5 @@ table {
     padding-left: 5px;
     padding-bottom:5px;
 }
+
+

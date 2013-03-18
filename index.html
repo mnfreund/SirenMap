@@ -10,20 +10,30 @@
 		<![endif]-->
 	<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
 	<link href="styles/sirenstyle.css" rel="stylesheet" />
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript" src="https://raw.github.com/datadesk/jquery-geocodify/master/jquery.geocodify.js"></script>
 </head>
 
 
 
 <body>
-
-<div id='map'>
-	<div id='info'>
-		<h3 id='title'>Siren Information</h3>
-		<p id='stats'>Hover over a circle</p>
-	</div>
+<div id="explainer">
+<center><img src='assets/intro.png'></center>
 </div>
+<div id="toggle">Click to Hide Map Details</div>
 
-<p id = 'location'>None</div>
+<div  id="formDiv">
+	<h3>Are you covered?</h3>
+	<p id="searchDetails"> Enter an Iowa address in the box below and press "Go".<br /> The map will zoom to and place a blue marker on that location.</p>
+<form id="geocoder"></form>
+</div>
+</div>
+<div id='info'>
+	<h3 id='title'>Siren Information</h3>
+	<p id='stats'>Hover over a circle</p>
+</div>
+<div id='map'>
+</div>
 
 <script type="text/javascript">
 
@@ -42,7 +52,7 @@ $(document).ready(function() { init() });
   function showInfo(data, tabletop) {
     finished_data = data;
 
-    var map = L.map('map').setView([41.85755,-91.52572], 10);
+    var map = L.map('map').setView([41.85755,-91.32572], 10);
 
 		L.tileLayer('http://{s}.tile.cloudmade.com/0a15ccd992b040678a3121d71ee92ace/44094/256/{z}/{x}/{y}.png', {
 			key:'...',
@@ -67,6 +77,7 @@ $(document).ready(function() { init() });
 				shadowAnchor: [3, 3],
 				popupAnchor:  [0, 0],
 				});
+
   	function onMouseIn(e){
   		var layer = e.target;
   		$('#stats').html('Location: ' + layer['options']['location'] + '<br />' + 'Radius: ' + layer['options']['radius'] + ' feet' + '<br />' + 'Type: ' + layer['options']['type']);
@@ -74,8 +85,11 @@ $(document).ready(function() { init() });
         	weight: 5,
         	color: '#666',
         	fillColor: '#E6550D',
-        	fillOpacity: 0.8
+        	fillOpacity: 0.5
     	});
+    	if (!L.Browser.ie && !L.Browser.opera) {
+                layer.bringToFront();
+                }
   	}
 
   	function onMouseOut(e){
@@ -84,7 +98,7 @@ $(document).ready(function() { init() });
 		layer.setStyle({
         	weight: 2,
         	color: 'gray',
-        	fillOpacity: 0.4,
+        	fillOpacity: 0.2,
         	fillColor: '#FDAE6B'
         });
   	}
@@ -94,7 +108,7 @@ $(document).ready(function() { init() });
 		var circle = L.circle([finished_data[i]['lat'], finished_data[i]['lon']], (.3048 * finished_data[i]['radius']), {
 			color: 'gray',
 			fillColor: '#FDAE6B',
-			fillOpacity: 0.4,
+			fillOpacity: 0.2,
 			weight: 2,
 			location: finished_data[i]['address'],
 			radius: finished_data[i]['radius'],
@@ -104,9 +118,71 @@ $(document).ready(function() { init() });
 		circle.on('mouseout', onMouseOut);
 		var marker = L.marker([finished_data[i]['lat'], finished_data[i]['lon']], {icon:sirenIcon}).addTo(map);
 	}
+isVisible = true;
+$('#toggle').click(function() {
+  $('#explainer').slideToggle('slow');
+  if(isVisible){
+  	$('#toggle').html("Click to Show Map Details");
+  	isVisible = false;
+  }
+  else{
+  	$('#toggle').html("Click to Hide Map Details");
+  	isVisible = true;
+  }
+});
+
+	// Geocodify
+// This creates a box around the Cedar Valley area
+var maxY = 43.564472;
+var minY = 40.313043;
+var minX = -96.889551;
+var maxX = -89.956055;
+ 
+var searchMarker;
+ 
+$("#geocoder").geocodify({
+    onSelect: function (result) {
+        // Extract the location from the geocoder result
+        var location = result.geometry.location;
+        // Center the map on the result
+        map.setView(new L.LatLng(location.lat(), (location.lng() + .01)), 15);
+        // Remove marker if one is already on map
+        if (searchMarker) {
+            map.removeLayer(searchMarker);
+        }
+        // Create marker
+        searchMarker = L.marker([location.lat(), location.lng()], {
+            clickable: false
+        });
+        // Add marker to the map
+        searchMarker.addTo(map)
+    },
+    initialText: "Enter an Iowa address",
+    regionBias: 'US',
+    // Lat, long information for Cedar Valley entered here
+    viewportBias: new google.maps.LatLngBounds(
+        new google.maps.LatLng(42.376807,-92.557068),
+        new google.maps.LatLng(42.603642,-92.184906)
+    ),
+    width: 350,
+    height: 26,
+    fontSize: '14px',
+    filterResults: function(results) {
+        var filteredResults =[];
+        $.each(results, function(i,val) {
+            var location = val.geometry.location;
+            if (location.lat() > minY && location.lat() < maxY) {
+                if (location.lng() > minX && location.lng() < maxX) {
+                    filteredResults.push(val);
+                }
+            }
+        });
+        return filteredResults;
+    }
+});
 
 
-	
+ 
 
 }
 
