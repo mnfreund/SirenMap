@@ -46,12 +46,25 @@ form{
     width: 200px;
 }
 
+h2{
+    width:400px;
+}
+
 h3{
     font-size: 30px;
     font-weight: bold;
     padding-left:2px;
+    padding-bottom: 5px;
+}
+
+h4{
+    font-size: 25px;
+    font-weight: bold;
+    padding-left:5px;
+    padding-top:3px;
     padding-bottom: 5px
 }
+
 #searchDetails{
     font-size: 14.2px;
     font-style: italic;
@@ -114,6 +127,7 @@ h3{
 }
 
 
+
 #toggle{
     font-style: italic;
     font-size: 12px;
@@ -143,9 +157,41 @@ h3{
 
 #stats{
     font-size: 14px;
+    border-spacing: 2px;
     position:relative;
     padding-left: 5px;
     padding-bottom:5px;
 }
 
+#x{
+    cursor: pointer;
+    display:block;
+    width:50px;
+    height:34px;
+    background-image: url("../assets/unselectedx.png");
+    position:absolute;
+    top:555px;
+    left:10px;
+    z-index: 9999;
+}
+
+#x.selected{
+    background-image: url("../assets/selectedx.png");
+}
+
+#circle{
+    cursor: pointer;
+    display:block;
+    width:50px;
+    height:34px;
+    background-image: url("../assets/unselectedcircle.png");
+    position:absolute;
+    top:555px;
+    left:60px;
+    z-index: 9999;
+}
+
+#circle.selected{
+    background-image: url("../assets/selectedcircle.png");
+}
 

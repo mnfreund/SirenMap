@@ -18,8 +18,12 @@
 
 <body>
 <div id="explainer">
-<center><img src='assets/intro.png'></center>
+  <h3> Tornado Sirens in Iowa</h3>
+  <h2>Explainer text of some kind telling people how this map was put together, what we are showing. Maybe something about the number of sirens included?</h2><br />
+  <p style="font-weight:bold;font-weight:italics">Understanding the Map</p>
+<img width="400px" src='assets/intro.png'>
 </div>
+
 <div id="toggle">Click to Hide Map Details</div>
 
 <div  id="formDiv">
@@ -29,9 +33,14 @@
 </div>
 </div>
 <div id='info'>
-	<h3 id='title'>Siren Information</h3>
+	<h4>Siren Information</h4>
 	<p id='stats'>Hover over a circle</p>
 </div>
+</div>
+<div id="x">
+  </div>
+  <div id="circle">
+  </div>
 <div id='map'>
 </div>
 
@@ -85,7 +94,7 @@ $(document).ready(function() { init() });
         	weight: 5,
         	color: '#666',
         	fillColor: '#E6550D',
-        	fillOpacity: 0.5
+        	fillOpacity: 0.3
     	});
     	if (!L.Browser.ie && !L.Browser.opera) {
                 layer.bringToFront();
@@ -98,26 +107,38 @@ $(document).ready(function() { init() });
 		layer.setStyle({
         	weight: 2,
         	color: 'gray',
-        	fillOpacity: 0.2,
+        	fillOpacity: 0.03,
         	fillColor: '#FDAE6B'
         });
   	}
 
-
+function circleView(){
+  var circles = [];
 	for (var i=0;i<finished_data.length;i++){
 		var circle = L.circle([finished_data[i]['lat'], finished_data[i]['lon']], (.3048 * finished_data[i]['radius']), {
 			color: 'gray',
 			fillColor: '#FDAE6B',
-			fillOpacity: 0.2,
+			fillOpacity: 0.03,
 			weight: 2,
 			location: finished_data[i]['address'],
 			radius: finished_data[i]['radius'],
 			type: finished_data[i]['type']
-		}).addTo(map);
-		circle.on('mouseover', onMouseIn);
-		circle.on('mouseout', onMouseOut);
-		var marker = L.marker([finished_data[i]['lat'], finished_data[i]['lon']], {icon:sirenIcon}).addTo(map);
+		});
+    circles.push(circle);
+		//circle.on('mouseover', onMouseIn);
+		//circle.on('mouseout', onMouseOut);
+		//var marker = L.marker([finished_data[i]['lat'], finished_data[i]['lon']], {icon:sirenIcon}).addTo(map);
 	}
+  for(var m=0; m<circles.length; m++){
+    circles[m].on('mouseover', onMouseIn);
+    circles[m].on('mouseout', onMouseOut);
+  }
+  layer = L.layerGroup(circles).addTo(map);
+}
+
+
+
+
 isVisible = true;
 $('#toggle').click(function() {
   $('#explainer').slideToggle('slow');
@@ -161,8 +182,8 @@ $("#geocoder").geocodify({
     regionBias: 'US',
     // Lat, long information for Cedar Valley entered here
     viewportBias: new google.maps.LatLngBounds(
-        new google.maps.LatLng(42.376807,-92.557068),
-        new google.maps.LatLng(42.603642,-92.184906)
+        new google.maps.LatLng(41.977869,-91.665802),
+        new google.maps.LatLng(41.648288,-91.593018)
     ),
     width: 350,
     height: 26,
@@ -182,7 +203,15 @@ $("#geocoder").geocodify({
 });
 
 
- 
+circleView();
+$('#x').click(function() {
+   $('#circle').removeClass('selected');
+   $('#x').addClass('selected');
+  });
+$('#circle').click(function() {
+   $('#x').removeClass('selected');
+   $('#circle').addClass('selected');
+  });
 
 }
 
