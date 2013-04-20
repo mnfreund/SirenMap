@@ -65,6 +65,8 @@ h4{
     padding-bottom: 5px
 }
 
+
+
 #searchDetails{
     font-size: 14.2px;
     font-style: italic;
@@ -83,7 +85,7 @@ h4{
 #info{
     position:relative;
     background-image: url("../assets/background.png");
-    margin-left: 62%;
+    margin-left: 70%;
     margin-top: 1%;
     width:250px;
     z-index: 999;
@@ -97,11 +99,12 @@ h4{
 #formDiv{
     position:relative;
     background-image: url("../assets/background.png");
-    margin-left: 47%;
+    margin-left: 54%;
     margin-top: 1%;
     padding:10px;
     padding-bottom:15px;
     width:395px;
+    height:100px;
     z-index: 9999999;
     border-radius:9px;
     margin-bottom: 4px
@@ -113,7 +116,7 @@ h4{
 #explainer{
     position:relative;
     background-image: url("../assets/background.png");
-    margin-left: 47%;
+    margin-left: 54%;
     margin-top: 1%;
     padding:10px;
     padding-bottom:15px;
@@ -126,6 +129,23 @@ h4{
 
 }
 
+#geocoder{
+    z-index: 9999999999999999;
+ 
+}
+
+li{
+    background-color: white;
+    width: 300px;
+    padding-bottom: 5px;
+    padding-top:5px;
+    padding-left:3px;
+    cursor: pointer;
+}
+
+li:hover{
+    background-color: lightgray;
+}
 
 
 #toggle{
@@ -133,7 +153,7 @@ h4{
     font-size: 12px;
     position:relative;
     background-image: url("../assets/togglebackground.png");
-    margin-left: 70.5%;
+    margin-left: 80.5%;
     margin-top: 0%;
     padding-right: 10px;
     padding-left: 10px;
@@ -141,7 +161,7 @@ h4{
     padding-bottom: 12px;
     width:130px;
     z-index: 999;
-    cursor: pointer;
+    cursor: auto;
 }
 
 
@@ -153,6 +173,15 @@ h4{
     font-family: 'arial';
     padding-left: 5px;
     padding-top:3px;
+}
+
+#toggleTitle{
+    z-index: 9999;
+    position: absolute;
+    font-size: 16px;
+    top:536px;
+    left:18px;
+    font-weight: bold;
 }
 
 #stats{

@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<!--Including links to tabletop JS/Jquery/and leaflet -->
 	<script src="tabletop/tabletop.js"></script>
-	<script src="assets/IowaCounties.js"></script>
+	<script src="assets/iowaCounties2.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
 		<!--[if lte IE 8]>
@@ -11,7 +12,7 @@
 	<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
 	<link href="styles/sirenstyle.css" rel="stylesheet" />
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-	<script type="text/javascript" src="https://raw.github.com/datadesk/jquery-geocodify/master/jquery.geocodify.js"></script>
+	<script type="text/javascript" src="assets/geocodify.js"></script>
 </head>
 
 
@@ -25,10 +26,9 @@
 </div>
 
 <div id="toggle">Click to Hide Map Details</div>
-
 <div  id="formDiv">
 	<h3>Are you covered?</h3>
-	<p id="searchDetails"> Enter an Iowa address in the box below and press "Go".<br /> The map will zoom to and place a blue marker on that location.</p>
+	<p id="searchDetails"> Enter an Iowa address in the box below. As you do, a list of matching addresses will appear below. Click on the correct address.</p>
 <form id="geocoder"></form>
 </div>
 </div>
@@ -37,13 +37,13 @@
 	<p id='stats'>Hover over a circle</p>
 </div>
 </div>
+<p id="toggleTitle">Toggle View</p>
 <div id="x">
   </div>
   <div id="circle">
   </div>
 <div id='map'>
 </div>
-
 <script type="text/javascript">
 
 $(document).ready(function() { init() });
@@ -60,7 +60,7 @@ $(document).ready(function() { init() });
 
   function showInfo(data, tabletop) {
     finished_data = data;
-
+    $('#circle').addClass('selected');
     var map = L.map('map').setView([41.85755,-91.32572], 10);
 
 		L.tileLayer('http://{s}.tile.cloudmade.com/0a15ccd992b040678a3121d71ee92ace/44094/256/{z}/{x}/{y}.png', {
@@ -69,12 +69,27 @@ $(document).ready(function() { init() });
 			attribution:'Web design and programming by Max Freund/ The Gazette'
 		}).addTo(map);
 
-	var johnson = L.polygon(johnsonCounty,{ color: 'gray', fillColor: '#3182BD', fillOpacity: .1, weight: 1}).addTo(map);
-	var linn = L.polygon(linnCounty,{ color: 'gray', fillColor: '#3182BD', fillOpacity: .1, weight: 1}).addTo(map);
-	var blackhawk = L.polygon(blackhawkCounty,{ color: 'gray', fillColor: '#3182BD', fillOpacity: .1, weight: 1}).addTo(map);
+    function base(feature) {
+    return {
+        fillColor: "#3182BD",
+        weight: 1,
+        opacity: 1,
+        color: 'gray',
+        fillOpacity: .1
+    };
+  }
 
 
-
+for (var i=0;i<iowaCounties["features"].length;i++){
+  if(iowaCounties["features"][i]["properties"]["NAME10"] == "Allamakee" || iowaCounties["features"][i]["properties"]["NAME10"] == "Benton" || iowaCounties["features"][i]["properties"]["NAME10"] == "Black Hawk" || iowaCounties["features"][i]["properties"]["NAME10"] == "Bremer" || iowaCounties["features"][i]["properties"]["NAME10"] == "Buchanan" || iowaCounties["features"][i]["properties"]["NAME10"] == "Butler" || iowaCounties["features"][i]["properties"]["NAME10"] == "Cedar" || iowaCounties["features"][i]["properties"]["NAME10"] == "Chickasaw" || iowaCounties["features"][i]["properties"]["NAME10"] == "Clayton" || iowaCounties["features"][i]["properties"]["NAME10"] == "Clinton" || iowaCounties["features"][i]["properties"]["NAME10"] == "Delaware" || iowaCounties["features"][i]["properties"]["NAME10"] == "Dubuque" || iowaCounties["features"][i]["properties"]["NAME10"] == "Fayette" || iowaCounties["features"][i]["properties"]["NAME10"] == "Franklin" || iowaCounties["features"][i]["properties"]["NAME10"] == "Grundy" || iowaCounties["features"][i]["properties"]["NAME10"] == "Henry" || iowaCounties["features"][i]["properties"]["NAME10"] == "Howard" || iowaCounties["features"][i]["properties"]["NAME10"] == "Iowa" || iowaCounties["features"][i]["properties"]["NAME10"] == "Jackson" || iowaCounties["features"][i]["properties"]["NAME10"] == "Jefferson" || iowaCounties["features"][i]["properties"]["NAME10"] == "Johnson" || iowaCounties["features"][i]["properties"]["NAME10"] == "Jones" || iowaCounties["features"][i]["properties"]["NAME10"] == "Keokuk" || iowaCounties["features"][i]["properties"]["NAME10"] == "Linn" || iowaCounties["features"][i]["properties"]["NAME10"] == "Muscatine" || iowaCounties["features"][i]["properties"]["NAME10"] == "Poweshiek" || iowaCounties["features"][i]["properties"]["NAME10"] == "Tama" || iowaCounties["features"][i]["properties"]["NAME10"] == "Washington" || iowaCounties["features"][i]["properties"]["NAME10"] == "Winneshiek")
+    {
+      var geojson;
+      geojson = L.geoJson(iowaCounties["features"][i]["geometry"], {
+      style:base
+    }).addTo(map);
+  }
+}
+	
 
   	var sirenIcon = L.icon({
 				iconUrl: 'assets/dot.png',
@@ -84,7 +99,7 @@ $(document).ready(function() { init() });
 				shadowSize:   [6, 6],
 				iconAnchor:   [3, 3],
 				shadowAnchor: [3, 3],
-				popupAnchor:  [0, 0],
+				popupAnchor:  [0, 0]
 				});
 
   	function onMouseIn(e){
@@ -111,8 +126,55 @@ $(document).ready(function() { init() });
         	fillColor: '#FDAE6B'
         });
   	}
+var currentCircle = [];
+var circleLayer = [];
+    function onMouseInX(e){
+      circleLayer = [];
+      currentCircle = [];
+      var layer = e.target;
+      $('#stats').html('Location: ' + layer['options']['location'] + '<br />' + 'Radius: ' + layer['options']['radius'] + ' feet' + '<br />' + 'Type: ' + layer['options']['type']);
+      var circle = L.circle([layer['options']['lat'], layer['options']['lon']], (.3048 * layer['options']['radius']),{
+        color: "#666",
+        fillColor: "#E6550D",
+        fillOpacity: 0.3,
+        weight: 5});
+      currentCircle.push(circle);
+      circleLayer = L.layerGroup(currentCircle).addTo(map);
+
+
+    }
+
+    function onMouseOutX(e){
+            $('#stats').html('Hover over an X');
+            circleLayer.clearLayers();
+
+
+    }
+function xView(){
+  layer = [];
+  var xes = [];
+  var xLayer = [];
+  for (var i=0;i<finished_data.length;i++){
+    var marker = L.marker([finished_data[i]['lat'], finished_data[i]['lon']], {
+      icon:sirenIcon,
+      lat: finished_data[i]['lat'],
+      lon: finished_data[i]['lon'],
+      radius: finished_data[i]['radius'],
+      location: finished_data[i]['address'],
+      radius: finished_data[i]['radius'],
+      type: finished_data[i]['type']}).addTo(map);
+    xes.push(marker);
+  }
+   for(var m=0; m<xes.length; m++){
+    xes[m].on('mouseover', onMouseInX);
+    xes[m].on('mouseout', onMouseOutX);
+  }
+  layer = L.layerGroup(xes).addTo(map);
+}
+
 
 function circleView(){
+  layer = [];
   var circles = [];
 	for (var i=0;i<finished_data.length;i++){
 		var circle = L.circle([finished_data[i]['lat'], finished_data[i]['lon']], (.3048 * finished_data[i]['radius']), {
@@ -178,7 +240,7 @@ $("#geocoder").geocodify({
         // Add marker to the map
         searchMarker.addTo(map)
     },
-    initialText: "Enter an Iowa address",
+    initialText: "Enter an Iowa address pretty please with sugar on top",
     regionBias: 'US',
     // Lat, long information for Cedar Valley entered here
     viewportBias: new google.maps.LatLngBounds(
@@ -205,13 +267,21 @@ $("#geocoder").geocodify({
 
 circleView();
 $('#x').click(function() {
+   layer.clearLayers();
+   $('#stats').html('Hover over an X');
    $('#circle').removeClass('selected');
    $('#x').addClass('selected');
+   xView();
   });
 $('#circle').click(function() {
+   layer.clearLayers();
+   $('#stats').html('Hover over a circle');
    $('#x').removeClass('selected');
    $('#circle').addClass('selected');
+   circleView();
   });
+
+
 
 }
 
