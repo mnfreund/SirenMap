@@ -79,13 +79,29 @@ $(document).ready(function() { init() });
     };
   }
 
+      function baseNone(feature) {
+    return {
+        fillColor: "#FF0000",
+        weight: 1,
+        opacity: 1,
+        color: 'gray',
+        fillOpacity: .1
+    };
+  }
+
 
 for (var i=0;i<iowaCounties["features"].length;i++){
-  if(iowaCounties["features"][i]["properties"]["NAME10"] == "Allamakee" || iowaCounties["features"][i]["properties"]["NAME10"] == "Benton" || iowaCounties["features"][i]["properties"]["NAME10"] == "Black Hawk" || iowaCounties["features"][i]["properties"]["NAME10"] == "Bremer" || iowaCounties["features"][i]["properties"]["NAME10"] == "Buchanan" || iowaCounties["features"][i]["properties"]["NAME10"] == "Butler" || iowaCounties["features"][i]["properties"]["NAME10"] == "Cedar" || iowaCounties["features"][i]["properties"]["NAME10"] == "Chickasaw" || iowaCounties["features"][i]["properties"]["NAME10"] == "Clayton" || iowaCounties["features"][i]["properties"]["NAME10"] == "Clinton" || iowaCounties["features"][i]["properties"]["NAME10"] == "Delaware" || iowaCounties["features"][i]["properties"]["NAME10"] == "Dubuque" || iowaCounties["features"][i]["properties"]["NAME10"] == "Fayette" || iowaCounties["features"][i]["properties"]["NAME10"] == "Franklin" || iowaCounties["features"][i]["properties"]["NAME10"] == "Grundy" || iowaCounties["features"][i]["properties"]["NAME10"] == "Henry" || iowaCounties["features"][i]["properties"]["NAME10"] == "Howard" || iowaCounties["features"][i]["properties"]["NAME10"] == "Iowa" || iowaCounties["features"][i]["properties"]["NAME10"] == "Jackson" || iowaCounties["features"][i]["properties"]["NAME10"] == "Jefferson" || iowaCounties["features"][i]["properties"]["NAME10"] == "Johnson" || iowaCounties["features"][i]["properties"]["NAME10"] == "Jones" || iowaCounties["features"][i]["properties"]["NAME10"] == "Keokuk" || iowaCounties["features"][i]["properties"]["NAME10"] == "Linn" || iowaCounties["features"][i]["properties"]["NAME10"] == "Muscatine" || iowaCounties["features"][i]["properties"]["NAME10"] == "Poweshiek" || iowaCounties["features"][i]["properties"]["NAME10"] == "Tama" || iowaCounties["features"][i]["properties"]["NAME10"] == "Washington" || iowaCounties["features"][i]["properties"]["NAME10"] == "Winneshiek")
+  if(iowaCounties["features"][i]["properties"]["NAME10"] == "Allamakee" || iowaCounties["features"][i]["properties"]["NAME10"] == "Benton" || iowaCounties["features"][i]["properties"]["NAME10"] == "Black Hawk" || iowaCounties["features"][i]["properties"]["NAME10"] == "Bremer" || iowaCounties["features"][i]["properties"]["NAME10"] == "Buchanan" || iowaCounties["features"][i]["properties"]["NAME10"] == "Butler" || iowaCounties["features"][i]["properties"]["NAME10"] == "Cedar" || iowaCounties["features"][i]["properties"]["NAME10"] == "Chickasaw" || iowaCounties["features"][i]["properties"]["NAME10"] == "Clayton" || iowaCounties["features"][i]["properties"]["NAME10"] == "Clinton" || iowaCounties["features"][i]["properties"]["NAME10"] == "Delaware" || iowaCounties["features"][i]["properties"]["NAME10"] == "Dubuque" || iowaCounties["features"][i]["properties"]["NAME10"] == "Fayette" || iowaCounties["features"][i]["properties"]["NAME10"] == "Franklin" || iowaCounties["features"][i]["properties"]["NAME10"] == "Grundy" || iowaCounties["features"][i]["properties"]["NAME10"] == "Henry" || iowaCounties["features"][i]["properties"]["NAME10"] == "Howard" || iowaCounties["features"][i]["properties"]["NAME10"] == "Iowa" || iowaCounties["features"][i]["properties"]["NAME10"] == "Jackson" || iowaCounties["features"][i]["properties"]["NAME10"] == "Jefferson" || iowaCounties["features"][i]["properties"]["NAME10"] == "Johnson" || iowaCounties["features"][i]["properties"]["NAME10"] == "Jones" || iowaCounties["features"][i]["properties"]["NAME10"] == "Keokuk" || iowaCounties["features"][i]["properties"]["NAME10"] == "Linn" || iowaCounties["features"][i]["properties"]["NAME10"] == "Muscatine" || iowaCounties["features"][i]["properties"]["NAME10"] == "Mahaska" || iowaCounties["features"][i]["properties"]["NAME10"] == "Poweshiek" || iowaCounties["features"][i]["properties"]["NAME10"] == "Tama" || iowaCounties["features"][i]["properties"]["NAME10"] == "Washington" || iowaCounties["features"][i]["properties"]["NAME10"] == "Wapello" ||iowaCounties["features"][i]["properties"]["NAME10"] == "Winneshiek")
     {
       var geojson;
+      if(iowaCounties["features"][i]["properties"]["NAME10"] == "Wapello" || iowaCounties["features"][i]["properties"]["NAME10"] == "Mahaska"){
+        var correctStyle = baseNone;
+      }
+      else{
+        var correctStyle = base;
+      }
       geojson = L.geoJson(iowaCounties["features"][i]["geometry"], {
-      style:base
+      style:correctStyle
     }).addTo(map);
   }
 }
