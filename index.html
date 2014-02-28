@@ -19,13 +19,15 @@
 
 <body>
 <div id="explainer">
-  <h3> Tornado Sirens in Iowa</h3>
-  <h2>Explainer text of some kind telling people how this map was put together, what we are showing. Maybe something about the number of sirens included?</h2><br />
+  <h3>Sirens in Iowa</h3>
+  <h2>The number, strength and placement of outdoor warning sirens varies across Eastern Iowa counties. This map approximates the range and coverage of nearly 800 sirens.</h2><br />
   <p style="font-weight:bold;font-weight:italics">Understanding the Map</p>
 <img width="400px" src='assets/intro.png'>
+<p>*5,280 ft was used as the estimate because it was the most frequently provided radius.</p>
 </div>
 
-<div id="toggle">Click to Hide Map Details</div>
+<div id="toggle">
+  </div>
 <div  id="formDiv">
 	<h3>Are you covered?</h3>
 	<p id="searchDetails"> Enter an Iowa address in the box below. As you do, a list of matching addresses will appear below. Click on the correct address.</p>
@@ -61,13 +63,14 @@ $(document).ready(function() { init() });
   function showInfo(data, tabletop) {
     finished_data = data;
     $('#circle').addClass('selected');
-    var map = L.map('map').setView([41.85755,-91.32572], 10);
+    var map = L.map('map').setView([42.07696,-90.879865], 8);
 
 		L.tileLayer('http://{s}.tile.cloudmade.com/0a15ccd992b040678a3121d71ee92ace/44094/256/{z}/{x}/{y}.png', {
 			key:'...',
 			maxZoom: 18,
 			attribution:'Web design and programming by Max Freund/ The Gazette'
 		}).addTo(map);
+
 
     function base(feature) {
     return {
@@ -91,7 +94,7 @@ $(document).ready(function() { init() });
 
 
 for (var i=0;i<iowaCounties["features"].length;i++){
-  if(iowaCounties["features"][i]["properties"]["NAME10"] == "Allamakee" || iowaCounties["features"][i]["properties"]["NAME10"] == "Benton" || iowaCounties["features"][i]["properties"]["NAME10"] == "Black Hawk" || iowaCounties["features"][i]["properties"]["NAME10"] == "Bremer" || iowaCounties["features"][i]["properties"]["NAME10"] == "Buchanan" || iowaCounties["features"][i]["properties"]["NAME10"] == "Butler" || iowaCounties["features"][i]["properties"]["NAME10"] == "Cedar" || iowaCounties["features"][i]["properties"]["NAME10"] == "Chickasaw" || iowaCounties["features"][i]["properties"]["NAME10"] == "Clayton" || iowaCounties["features"][i]["properties"]["NAME10"] == "Clinton" || iowaCounties["features"][i]["properties"]["NAME10"] == "Delaware" || iowaCounties["features"][i]["properties"]["NAME10"] == "Dubuque" || iowaCounties["features"][i]["properties"]["NAME10"] == "Fayette" || iowaCounties["features"][i]["properties"]["NAME10"] == "Franklin" || iowaCounties["features"][i]["properties"]["NAME10"] == "Grundy" || iowaCounties["features"][i]["properties"]["NAME10"] == "Henry" || iowaCounties["features"][i]["properties"]["NAME10"] == "Howard" || iowaCounties["features"][i]["properties"]["NAME10"] == "Iowa" || iowaCounties["features"][i]["properties"]["NAME10"] == "Jackson" || iowaCounties["features"][i]["properties"]["NAME10"] == "Jefferson" || iowaCounties["features"][i]["properties"]["NAME10"] == "Johnson" || iowaCounties["features"][i]["properties"]["NAME10"] == "Jones" || iowaCounties["features"][i]["properties"]["NAME10"] == "Keokuk" || iowaCounties["features"][i]["properties"]["NAME10"] == "Linn" || iowaCounties["features"][i]["properties"]["NAME10"] == "Muscatine" || iowaCounties["features"][i]["properties"]["NAME10"] == "Mahaska" || iowaCounties["features"][i]["properties"]["NAME10"] == "Poweshiek" || iowaCounties["features"][i]["properties"]["NAME10"] == "Tama" || iowaCounties["features"][i]["properties"]["NAME10"] == "Washington" || iowaCounties["features"][i]["properties"]["NAME10"] == "Wapello" ||iowaCounties["features"][i]["properties"]["NAME10"] == "Winneshiek")
+  if(iowaCounties["features"][i]["properties"]["NAME10"] == "Benton" || iowaCounties["features"][i]["properties"]["NAME10"] == "Black Hawk" || iowaCounties["features"][i]["properties"]["NAME10"] == "Bremer" || iowaCounties["features"][i]["properties"]["NAME10"] == "Buchanan" || iowaCounties["features"][i]["properties"]["NAME10"] == "Butler" || iowaCounties["features"][i]["properties"]["NAME10"] == "Cedar" || iowaCounties["features"][i]["properties"]["NAME10"] == "Chickasaw" || iowaCounties["features"][i]["properties"]["NAME10"] == "Clayton" || iowaCounties["features"][i]["properties"]["NAME10"] == "Clinton" || iowaCounties["features"][i]["properties"]["NAME10"] == "Delaware" || iowaCounties["features"][i]["properties"]["NAME10"] == "Dubuque" || iowaCounties["features"][i]["properties"]["NAME10"] == "Fayette" || iowaCounties["features"][i]["properties"]["NAME10"] == "Franklin" || iowaCounties["features"][i]["properties"]["NAME10"] == "Grundy" || iowaCounties["features"][i]["properties"]["NAME10"] == "Henry" || iowaCounties["features"][i]["properties"]["NAME10"] == "Howard" || iowaCounties["features"][i]["properties"]["NAME10"] == "Iowa" || iowaCounties["features"][i]["properties"]["NAME10"] == "Jackson" || iowaCounties["features"][i]["properties"]["NAME10"] == "Jefferson" || iowaCounties["features"][i]["properties"]["NAME10"] == "Johnson" || iowaCounties["features"][i]["properties"]["NAME10"] == "Jones" || iowaCounties["features"][i]["properties"]["NAME10"] == "Keokuk" || iowaCounties["features"][i]["properties"]["NAME10"] == "Linn" || iowaCounties["features"][i]["properties"]["NAME10"] == "Muscatine" || iowaCounties["features"][i]["properties"]["NAME10"] == "Mahaska" || iowaCounties["features"][i]["properties"]["NAME10"] == "Marshall" || iowaCounties["features"][i]["properties"]["NAME10"] == "Poweshiek" || iowaCounties["features"][i]["properties"]["NAME10"] == "Scott" || iowaCounties["features"][i]["properties"]["NAME10"] == "Tama" || iowaCounties["features"][i]["properties"]["NAME10"] == "Washington" || iowaCounties["features"][i]["properties"]["NAME10"] == "Wapello" ||iowaCounties["features"][i]["properties"]["NAME10"] == "Winneshiek")
     {
       var geojson;
       if(iowaCounties["features"][i]["properties"]["NAME10"] == "Wapello" || iowaCounties["features"][i]["properties"]["NAME10"] == "Mahaska"){
@@ -120,7 +123,7 @@ for (var i=0;i<iowaCounties["features"].length;i++){
 
   	function onMouseIn(e){
   		var layer = e.target;
-  		$('#stats').html('Location: ' + layer['options']['location'] + '<br />' + 'Radius: ' + layer['options']['radius'] + ' feet' + '<br />' + 'Type: ' + layer['options']['type']);
+  		$('#stats').html('Location: ' + layer['options']['location'] + '<br />' + 'Radius: ' + layer['options']['radius'] + ' feet');
 		layer.setStyle({
         	weight: 5,
         	color: '#666',
@@ -148,7 +151,7 @@ var circleLayer = [];
       circleLayer = [];
       currentCircle = [];
       var layer = e.target;
-      $('#stats').html('Location: ' + layer['options']['location'] + '<br />' + 'Radius: ' + layer['options']['radius'] + ' feet' + '<br />' + 'Type: ' + layer['options']['type']);
+      $('#stats').html('Location: ' + layer['options']['location'] + '<br />' + 'Radius: ' + layer['options']['radius'] + ' feet');
       var circle = L.circle([layer['options']['lat'], layer['options']['lon']], (.3048 * layer['options']['radius']),{
         color: "#666",
         fillColor: "#E6550D",
@@ -221,11 +224,9 @@ isVisible = true;
 $('#toggle').click(function() {
   $('#explainer').slideToggle('slow');
   if(isVisible){
-  	$('#toggle').html("Click to Show Map Details");
   	isVisible = false;
   }
   else{
-  	$('#toggle').html("Click to Hide Map Details");
   	isVisible = true;
   }
 });
